@@ -8,19 +8,49 @@ import router from './app/routes';
 import globalErrorHandler from './app/middlewares/globalErrorHandler';
 import notFound from './app/middlewares/notFound';
 
+import mongoose from 'mongoose';
+
 const app: Application = express();
 
 // Security & Parsing Middlewares
 app.use(helmet());
+
+const allowedOrigins = [
+  config.client_url,
+  'http://localhost:3000',
+  'http://127.0.0.1:3000',
+  'https://doctor-tracker-pro.vercel.app',
+];
+
 app.use(
   cors({
-    origin: [config.client_url, 'http://localhost:3000', 'http://127.0.0.1:3000'],
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin) || origin.endsWith('.vercel.app')) {
+        callback(null, true);
+      } else {
+        callback(null, true);
+      }
+    },
     credentials: true,
   }),
 );
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Serverless DB connection check
+app.use(async (_req, _res, next) => {
+  if (mongoose.connection.readyState !== 1) {
+    try {
+      await mongoose.connect(config.database_url, {
+        serverSelectionTimeoutMS: 5000,
+      });
+    } catch (error) {
+      console.error('Serverless MongoDB connection error:', error);
+    }
+  }
+  next();
+});
 
 if (config.node_env === 'development') {
   app.use(morgan('dev'));

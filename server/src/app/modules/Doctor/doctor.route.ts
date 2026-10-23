@@ -5,6 +5,8 @@ import { DoctorValidation } from './doctor.validation';
 import auth from '../../middlewares/auth';
 import { USER_ROLE } from '../User/user.constant';
 
+import { PatientValidation } from '../Patient/patient.validation';
+
 const router = express.Router();
 
 router.get(
@@ -49,6 +51,7 @@ router.get(
 router.post(
   '/:id/patients',
   auth(USER_ROLE.admin),
+  validateRequest(PatientValidation.addPatientToDoctorValidationSchema),
   DoctorController.addPatientToDoctor,
 );
 

@@ -56,18 +56,19 @@ Or ensure your local MongoDB service is running on `mongodb://127.0.0.1:27017/do
 #### 3. Install Monorepo Dependencies
 From the repository root:
 ```bash
-# Install root concurrency runner
+# Using pnpm (Recommended)
+pnpm install
+pnpm --prefix server install
+pnpm --prefix client install
+
+# Or using npm
 npm install
-
-# Install backend dependencies
 npm --prefix server install
-
-# Install frontend dependencies
 npm --prefix client install
 ```
 
 #### 4. Configure Environment Variables
-Copy the `.env.example` templates in both `server/` and `client/`:
+Copy the `.env.example` templates in both `server/` and `client/` (and root reference):
 ```bash
 cp server/.env.example server/.env
 cp client/.env.example client/.env.local
@@ -76,15 +77,15 @@ cp client/.env.example client/.env.local
 #### 5. Seed the Database
 Populate MongoDB with administrative accounts, 15 licensed doctors, and 60 realistic patient records distributed across hospitals:
 ```bash
-npm run seed
-# or
-npm --prefix server run seed
+pnpm seed
+# or: npm run seed
 ```
 
 #### 6. Run the Entire Stack Concurrently
 To start both the Express REST API (port `5000`) and Next.js frontend (port `3000`) concurrently:
 ```bash
-npm run dev
+pnpm dev
+# or: npm run dev
 ```
 
 The application is now live at:

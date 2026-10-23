@@ -40,7 +40,14 @@ class QueryBuilder<T> {
     }
 
     if (Object.keys(dateFilters).length > 0) {
-      (queryCopy as any).createdAt = dateFilters;
+      const hasAdmissionDate = Boolean(
+        (this.modelQuery.model?.schema as any)?.paths?.admissionDate,
+      );
+      if (hasAdmissionDate) {
+        (queryCopy as any).admissionDate = dateFilters;
+      } else {
+        (queryCopy as any).createdAt = dateFilters;
+      }
     }
 
     this.modelQuery = this.modelQuery.find(queryCopy as FilterQuery<T>);

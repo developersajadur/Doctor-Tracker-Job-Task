@@ -4,15 +4,15 @@
   "description": "Doctor Tracker - Medical Administrative Web Application",
   "private": true,
   "scripts": {
-    "dev": "concurrently -n \"SERVER,CLIENT\" -c \"bgBlue.bold,bgGreen.bold\" \"npm run dev:server\" \"npm run dev:client\"",
-    "dev:server": "npm --prefix server run dev",
-    "dev:client": "npm --prefix client run dev",
-    "build:server": "npm --prefix server run build",
-    "build:client": "npm --prefix client run build",
-    "start:server": "npm --prefix server run start",
-    "start:client": "npm --prefix client run start",
-    "seed": "npm --prefix server run seed",
-    "install:all": "npm install && npm --prefix server install && npm --prefix client install"
+    "dev": "concurrently -n \"SERVER,CLIENT\" -c \"bgBlue.bold,bgGreen.bold\" \"pnpm run dev:server\" \"pnpm run dev:client\"",
+    "dev:server": "pnpm --prefix server run dev",
+    "dev:client": "pnpm --prefix client run dev",
+    "build:server": "pnpm --prefix server run build",
+    "build:client": "pnpm --prefix client run build",
+    "start:server": "pnpm --prefix server run start",
+    "start:client": "pnpm --prefix client run start",
+    "seed": "pnpm --prefix server run seed",
+    "install:all": "pnpm install && pnpm --prefix server install && pnpm --prefix client install"
   },
   "devDependencies": {
     "concurrently": "^9.1.2"

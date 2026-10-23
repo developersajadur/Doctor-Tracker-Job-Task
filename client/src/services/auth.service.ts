@@ -24,7 +24,7 @@ export const AuthService = {
   logout: async () => {
     try {
       await api.post('/auth/logout');
-    } catch (e) {
+    } catch {
       // Ignore network errors during logout
     } finally {
       localStorage.removeItem('token');

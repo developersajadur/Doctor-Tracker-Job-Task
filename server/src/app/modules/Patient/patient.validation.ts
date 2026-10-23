@@ -29,7 +29,22 @@ const updatePatientValidationSchema = z.object({
   }),
 });
 
+const addPatientToDoctorValidationSchema = z.object({
+  body: z.object({
+    name: z.string({ required_error: 'Patient name is required' }).min(2, 'Name must be at least 2 characters'),
+    age: z.number({ required_error: 'Age is required' }).min(0, 'Age must be 0 or greater').max(130, 'Invalid age'),
+    gender: z.enum(PATIENT_GENDERS, { required_error: 'Gender is required' }),
+    phone: z.string({ required_error: 'Phone number is required' }).min(7, 'Invalid phone number'),
+    email: z.string().email('Invalid email address').optional().or(z.literal('')),
+    condition: z.enum(PATIENT_CONDITIONS, { required_error: 'Condition is required' }).optional(),
+    admissionDate: z.string().optional(),
+    diagnosisNotes: z.string().optional(),
+  }),
+});
+
 export const PatientValidation = {
   createPatientValidationSchema,
   updatePatientValidationSchema,
+  addPatientToDoctorValidationSchema,
 };
+
